@@ -1,12 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const cors = require('cors'); // Import the CORS package
+const cors = require('cors');
 
 const app = express();
 app.use(bodyParser.json());
-
-// Enable CORS for all routes
 app.use(cors());
 
 // Set Content-Type to application/json for all responses
@@ -25,21 +23,24 @@ db.once('open', () => {
     console.log('Connected to MongoDB');
 });
 
-// Define a schema with numeric timestamp
+// Define a schema with numeric timestamp and separate fields for current, voltage, and temperature
 const DataSchema = new mongoose.Schema({
-    data: String,  // You can change the data type as needed
-    timestamp: Number // Store the timestamp as a numeric value (milliseconds since Unix Epoch)
+    current: String,    // You can change the data type as needed
+    voltage: String,    // You can change the data type as needed
+    temperature: String, // Corrected the typo from "temprature" to "temperature"
+    timestamp: Number   // Store the timestamp as a numeric value (milliseconds since Unix Epoch)
 });
 
 const DataModel = mongoose.model('Data', DataSchema);
 
 // Endpoint to save data
 app.post('/save-data', async (req, res) => {
-    const { data } = req.body;
+    const { current, voltage, temperature } = req.body; // Destructure the data fields from the request body
     const timestamp = Date.now(); // Get the current timestamp in milliseconds
 
     try {
-        const newData = new DataModel({ data, timestamp });
+        // Create a new data entry with the received fields
+        const newData = new DataModel({ current, voltage, temperature, timestamp });
         await newData.save();
         res.status(201).json({ message: 'Data saved successfully', data: newData });
     } catch (error) {
