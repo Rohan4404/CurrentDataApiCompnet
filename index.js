@@ -27,7 +27,6 @@ db.once('open', () => {
 const DataSchema = new mongoose.Schema({
     current: String,    // You can change the data type as needed
     power: String,    // You can change the data type as needed
-    temperature: String, // Corrected the typo from "temprature" to "temperature"
     timestamp: Number   // Store the timestamp as a numeric value (milliseconds since Unix Epoch)
 });
 
@@ -35,12 +34,12 @@ const DataModel = mongoose.model('Data', DataSchema);
 
 // Endpoint to save data
 app.post('/save-data', async (req, res) => {
-    const { current, power, temperature } = req.body; // Destructure the data fields from the request body
+    const { current, power} = req.body; // Destructure the data fields from the request body
     const timestamp = Date.now(); // Get the current timestamp in milliseconds
 
     try {
         // Create a new data entry with the received fields
-        const newData = new DataModel({ current, power, temperature, timestamp });
+        const newData = new DataModel({ current, power, timestamp });
         await newData.save();
         res.status(201).json({ message: 'Data saved successfully', data: newData });
     } catch (error) {
