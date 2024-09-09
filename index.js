@@ -26,7 +26,7 @@ db.once('open', () => {
 // Define a schema with numeric timestamp and separate fields for current, voltage, and temperature
 const DataSchema = new mongoose.Schema({
     current: String,    // You can change the data type as needed
-    voltage: String,    // You can change the data type as needed
+    power: String,    // You can change the data type as needed
     temperature: String, // Corrected the typo from "temprature" to "temperature"
     timestamp: Number   // Store the timestamp as a numeric value (milliseconds since Unix Epoch)
 });
@@ -63,3 +63,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+//https://current-data-api-compnet.vercel.app/
