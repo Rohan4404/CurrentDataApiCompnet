@@ -15,7 +15,7 @@ app.use((req, res, next) => {
 
 // Replace with your MongoDB connection string
 const mongoURI = 'mongodb+srv://rohansharma99anc:pRjwaXQMkzTQn5HM@cluster0.gx90o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoURI);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -34,7 +34,7 @@ const DataModel = mongoose.model('Data', DataSchema);
 
 // Endpoint to save data
 app.post('/save-data', async (req, res) => {
-    const { current, power} = req.body; // Destructure the data fields from the request body
+    const { current, power } = req.body; // Destructure the data fields from the request body
     const timestamp = Date.now(); // Get the current timestamp in milliseconds
 
     try {
@@ -62,6 +62,3 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-
-//https://current-data-api-compnet.vercel.app/
